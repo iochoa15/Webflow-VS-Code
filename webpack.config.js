@@ -120,18 +120,21 @@ module.exports = {
   // This helps with GSAP integration
   externals: {
     'gsap': 'gsap'
-  }
-
-
-
-
-
-
   },
-  {
-    "permissions": [
-      "storage"
-    ]
+  devServer: {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS", 
+  "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
+  "Permissions-Policy": "interest-cohort=()"
+    }
+  },
+  resolve: {
+    extensions: ['.js']
   }
-
+};
+  {
+    resolve: {
+        extensions: ['.js']
+    }
 };
