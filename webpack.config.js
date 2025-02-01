@@ -82,13 +82,79 @@
 
 
 
+// const path = require("path");
+// const webpack = require('webpack');
+
+// module.exports = {
+//   mode: "production",
+//   entry: {
+//     ["global"]: "./src/index.js",
+//     ["about"]: "./src/about.js",
+//     ["casestudies"]: "./src/casestudies.js",
+//     ["work"]: "./src/work.js",
+//   },
+//   output: {
+//     path: path.resolve(__dirname, "dist"),
+//     filename: "[name].js",
+//     library: "[name]",
+//     libraryTarget: "umd",
+//     globalObject: "this",
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.js$/,
+//         exclude: /node_modules/,
+//         use: {
+//           loader: 'babel-loader',
+//           options: {
+//             presets: ['@babel/preset-env']
+//           }
+//         }
+//       }
+//     ]
+//   },
+//   plugins: [
+//     // Expose GSAP globally
+//     new webpack.ProvidePlugin({
+//       gsap: 'gsap'
+//     })
+//   ],
+//   // This helps with GSAP integration
+//   externals: {
+//     'gsap': 'gsap'
+//   },
+//   devServer: {
+//     headers: {
+//       "Access-Control-Allow-Origin": "*",
+//       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS", 
+//   "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
+//   "Permissions-Policy": "interest-cohort=()"
+//     }
+//   },
+//   resolve: {
+//     extensions: ['.js']
+//   }
+// };
+//   {
+//     resolve: {
+//         extensions: ['.js']
+//     }
+// };
+
+
+
 const path = require("path");
 const webpack = require('webpack');
 
 module.exports = {
   mode: "production",
+  // Define multiple entry points
   entry: {
-    ["global"]: "./src/index.js",
+    "global": "./src/index.js",
+    "about": "./src/about.js",
+    "casestudies": "./src/casestudies.js",
+    "work": "./src/work.js"
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -105,36 +171,26 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env']
+            presets: ['@babel/preset-env'],
+            // Add this to handle ES6 modules
+            plugins: ['@babel/plugin-transform-modules-commonjs']
           }
         }
       }
     ]
   },
   plugins: [
-    // Expose GSAP globally
+    // Make GSAP available in all files
     new webpack.ProvidePlugin({
       gsap: 'gsap'
     })
   ],
-  // This helps with GSAP integration
+  // External dependencies
   externals: {
     'gsap': 'gsap'
   },
-  devServer: {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS", 
-  "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization",
-  "Permissions-Policy": "interest-cohort=()"
-    }
-  },
-  resolve: {
-    extensions: ['.js']
+  // Add this to see more detailed error messages
+  stats: {
+    errorDetails: true
   }
-};
-  {
-    resolve: {
-        extensions: ['.js']
-    }
 };
