@@ -144,53 +144,135 @@
 
 
 
+// const path = require("path");
+// const webpack = require('webpack');
+
+// module.exports = {
+//   mode: "production",
+//   // Define multiple entry points
+//   entry: {
+//     "global": "./src/index.js",
+//     "about": "./src/about.js",
+//     "casestudies": "./src/casestudies.js",
+//     "work": "./src/work.js"
+//   },
+//   output: {
+//     path: path.resolve(__dirname, "dist"),
+//     filename: "[name].js",
+//     library: "[name]",
+//     libraryTarget: "umd",
+//     globalObject: "this",
+//   },
+//   module: {
+//     rules: [
+//       {
+//         test: /\.js$/,
+//         exclude: /node_modules/,
+//         use: {
+//           loader: 'babel-loader',
+//           options: {
+//             presets: ['@babel/preset-env'],
+//             // Add this to handle ES6 modules
+//             plugins: ['@babel/plugin-transform-modules-commonjs']
+//           }
+//         }
+//       }
+//     ]
+//   },
+//   plugins: [
+//     // Make GSAP available in all files
+//     new webpack.ProvidePlugin({
+//       gsap: 'gsap'
+//     })
+//   ],
+//   // External dependencies
+//   externals: {
+//     'gsap': 'gsap'
+//   },
+//   // Add this to see more detailed error messages
+//   stats: {
+//     errorDetails: true
+//   }
+// };
+
+
+//02/06/2025
+// These are required Node.js modules
+// 'path' helps us work with file and directory paths
 const path = require("path");
+// 'webpack' gives us access to webpack's built-in plugins
 const webpack = require('webpack');
 
+// Export our webpack configuration object
 module.exports = {
+  // Set mode to "production" for optimized output
   mode: "production",
-  // Define multiple entry points
+
+  // Define entry points - these are the files webpack will start with
+  // Each key will become a separate bundle
   entry: {
-    "global": "./src/index.js",
-    "about": "./src/about.js",
-    "casestudies": "./src/casestudies.js",
-    "work": "./src/work.js"
+    "global": "./src/index.js",      // Main animations file
+    "about": "./src/about.js",       // About page specific code
+    "casestudies": "./src/casestudies.js", // Case studies page code
+    "work": "./src/work.js"          // Work page specific code
   },
+
+  // Tell webpack how and where to save the compiled files
   output: {
+    // The absolute path where files will be saved
     path: path.resolve(__dirname, "dist"),
+    // How to name the output files - [name] gets replaced with the entry key
     filename: "[name].js",
-    library: "[name]",
-    libraryTarget: "umd",
-    globalObject: "this",
+    // The URL path where files will be available in the browser
+    publicPath: "http://localhost:3000/"
   },
+
+  // Module rules tell webpack how to handle different types of files
   module: {
     rules: [
       {
+        // This rule applies to all .js files
         test: /\.js$/,
+        // Don't process files in node_modules
         exclude: /node_modules/,
         use: {
+          // Use babel-loader to make our JS work in older browsers
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
-            // Add this to handle ES6 modules
-            plugins: ['@babel/plugin-transform-modules-commonjs']
+            // Use preset-env to automatically determine which JS features need to be transformed
+            presets: ['@babel/preset-env']
           }
         }
       }
     ]
   },
-  plugins: [
-    // Make GSAP available in all files
-    new webpack.ProvidePlugin({
-      gsap: 'gsap'
-    })
-  ],
-  // External dependencies
-  externals: {
-    'gsap': 'gsap'
-  },
-  // Add this to see more detailed error messages
-  stats: {
-    errorDetails: true
+
+  // Development server configuration
+  devServer: {
+    // The port your dev server will run on
+    port: 3000,
+    // Where the server will run
+    host: 'localhost',
+    // Headers to allow cross-origin requests (needed for Webflow)
+    headers: {
+      // Allow requests from any origin
+      "Access-Control-Allow-Origin": "*",
+      // Allow these HTTP methods
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      // Allow these headers in requests
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    },
+    // Configure the static file serving
+    static: {
+      // Where to serve files from
+      directory: path.join(__dirname, 'dist')
+    }
   }
 };
+
+// Key changes from your previous configuration:
+
+// Removed UMD-specific settings that were causing issues
+// Added proper CORS headers for cross-origin requests
+// Configured the dev server properly
+// Simplified the overall configuration while maintaining functionality
