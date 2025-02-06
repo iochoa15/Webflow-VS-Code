@@ -1,0 +1,20 @@
+{
+    // Babel presets (collections of plugins)
+    "presets": [
+      ["@babel/preset-env", {
+        // Handle modules automatically
+        "modules": "auto",
+        // Target browsers for compatibility
+        "targets": {
+          "browsers": ["last 2 versions"]
+        }
+      }]
+    ],
+    // Individual Babel plugins
+    "plugins": [
+      // Helps with modern JS features
+      "@babel/plugin-transform-runtime",
+      // Converts ES6 modules to CommonJS
+      "@babel/plugin-transform-modules-commonjs"
+    ]
+  }
