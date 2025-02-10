@@ -228,7 +228,8 @@ module.exports = {
    // How to name the output files ([name] gets replaced with entry point name)
    filename: "[name].js",
    // Base URL for all assets
-   publicPath: "http://localhost:3000/"
+   publicPath: "http://localhost:3000/",
+   crossOriginLoading: 'anonymous' // New line
  },
 
  // Module rules tell webpack how to process different types of files
