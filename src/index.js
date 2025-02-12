@@ -1,4 +1,5 @@
-// console.log("Hello from index.js wich is my Homepage");
+console.log("Hello from index.js wich is my Homepage");
+console.log("Hello from index.js wich is my Homepage");
 
 
 // /****************************************************
